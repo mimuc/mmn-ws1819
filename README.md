@@ -17,7 +17,7 @@ To do the Break-Out exercises during the tutorials and to complete all assignmen
     - After you're all set with git, go straight ahead to [this tutorial](https://rogerdudler.github.io/git-guide/), if you don't know git.
     - Watch [this video](https://www.youtube.com/watch?v=Y9XZQO1n_7c) to get you all up and running with git.
     - We recommend generating an SSH key and cloning this repository via SSH.
-    - [This article] is also a recommended read when working with git.
+    - [This article](https://chris.beams.io/posts/git-commit/) is also a recommended read when working with git.
 
 - NodeJS (+ npm). https://nodejs.org/en/.
     - MacOS: preferably via [Homebrew](https://brew.sh/) (or MacPorts if you already have that).  The package from the NodeJS website also works.
