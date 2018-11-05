@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MMN Tutorial 03 - Breakout 02 - AJAX Revisited</title>
+    <link rel="stylesheet" href="spotify.css">
+    <script>
+      /**
+       * A class for performing AJAX calls.
+       */
+      class AJAX {
+        /**
+         * Performs a GET request to a given URL
+         *
+         * @param {URL | string} url The request URL
+         * @returns {Promise<any>}
+         */
+        get (url) {
+          // TODO Make a get request to the given URL
+        }
+      }
+
+      class SpotifyAPI extends AJAX {
+        /**
+          * Queries the Spotify API for items of a given type matching the search query
+          *
+          * @param {string} query Album title query
+          * @param {string} type Type of the requested search results
+          * @returns {Promise<Object>}
+          */
+        search (query, type) {
+          // TODO construct the URL
+          const url = '';
+          return this.get(url);
+        }
+
+        /**
+          * Queries the Spotify API for albums matching the search query
+          *
+          * @param {string} query Album title query
+          * @returns {Promise<Object>}
+          */
+        searchAlbum (query) {
+          return this.search(query, 'album');
+        }
+
+        /**
+          * Queries the Spotify API for artists matching the search query
+          *
+          * @param {string} query Artist name query
+          * @returns {Promise<Object>}
+          */
+        searchArtist (query) {
+          return this.search(query, 'artist');
+        }
+      }
+
+      SpotifyAPI.prototype.BASE_URL = 'http://flobe-online.de:3000';
+      // TODO define the API_KEY such that is available in SpotifyAPI instances, i.e. as member constant
+
+      class SpotifyApp {
+        /**
+         * @param {HTMLInputElement} input
+         * @param {HTMLDivElement} output
+         */
+        constructor (input, output) {
+          this.input = input;
+          this.output = output;
+          this.api = new SpotifyAPI();
+          this.input.addEventListener('keyup', (e) => this.queryHandler(e));
+        }
+
+        /**
+         * @param {KeyboardEvent} e
+         */
+        queryHandler (e) {
+          // If enter was pressed and input has more than two letters
+          if (e.keyCode === 13 && this.input.value.length > 2) {
+            e.preventDefault();
+            // TODO get results from this.api and render the results with this.renderResults
+
+          }
+        }
+
+        renderResults (results) {
+          this.output.innerHTML = '';
+
+          const artists = results.artists.items;
+
+          // TODO destructure the artists to get access to:
+          // name: the name of the artist
+          // href: the URL of the artists spotify site
+          // images: the list of preview images
+          artists.forEach((artist) => {
+
+            const wrapper = document.createElement('a');
+            if (images.length) {
+              const image = new Image();
+              image.src = images[0].url;
+              wrapper.appendChild(image);
+            }
+            wrapper.appendChild(document.createTextNode(name));
+            wrapper.href = href;
+
+            this.output.appendChild(wrapper);
+          });
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        new SpotifyApp(
+          document.querySelector('input'),
+          document.querySelector('.output'),
+        );
+      });
+    </script>
+  </head>
+  <body>
+    <input type="search" placeholder="Type and hit enter to search...">
+    <div class="output"></div>
+  </body>
+</html>
