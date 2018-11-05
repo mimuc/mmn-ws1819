@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Breakout</title>
+  <link rel="stylesheet" href="spotify-breakout.css">
+  <script>
+    'use strict';
+
+    /**
+    * @param q        the search query. See https://developer.spotify.com/documentation/web-api/reference/search/search/
+    * @param type     what to search for. See https://developer.spotify.com/documentation/web-api/reference/search/search/
+    * @param offset   paging parameter. The api returns max. 50 items per request. 
+    				  A query with offset=0 returns items 0 to 49; offset 49 returns items 50 ro 99 etc.
+    */
+    function spotifySearch(query, type, offset){
+      const baseURL = 'http://flobe-online.de:3000/search';
+      const apiKey = "-- provided by MMN staff --";
+      const itemsPerQuery = 50;
+
+      var fullSearchURL = baseURL+"?q="+query+"&type="+type+"&key="+apiKey+"&limit="+itemsPerQuery+"&offset="+offset;
+          
+      // create new request object
+      var req = new XMLHttpRequest();
+      // define method (get, post, ...) and url
+      req.open('get', fullSearchURL);
+      // callback that is called when the request state changes (e.g. from loading to done)
+      req.addEventListener('readystatechange', function(){
+      	// if the request is done...
+      	if (req.readyState === 4) { // done
+      	  // the response contains a json string (e.g. {"foo":42,"bar":{"moreData":43}} ). We have to parse it to a Javascript object	
+      	  var parsedResponse = JSON.parse(req.responseText);
+
+      	  // check if the response object has all expected properties
+      	  if (parsedResponse && parsedResponse.artists && parsedResponse.artists.items) {
+                       
+            // loop through the artists and generate some html for each one.
+            parsedResponse.artists.items.forEach(function(artist) {
+              var divEl = document.createElement('div');
+              var aEl = document.createElement('a');
+              var imgEl = document.createElement('img');
+
+              // construct the image;
+              imgEl.setAttribute('src', artist.images && artist.images.length ? artist.images[0].url : null);
+              imgEl.setAttribute('alt', artist.name);
+
+              // construct the link
+              aEl.setAttribute('href', artist.external_urls.spotify);
+              aEl.setAttribute('target', '_blank');
+
+              // add things together;
+              divEl.classList.add('artist');
+              divEl.appendChild(aEl);
+              aEl.appendChild(imgEl);
+              document.getElementById('result').appendChild(divEl);
+            });
+          }
+
+          // check if there are more pages left to be loaded
+          if (parsedResponse.artists.next){
+          	spotifySearch(query, type, parsedResponse.artists.offset+itemsPerQuery);
+          }
+      	}
+      });
+      // actually perform the request
+      req.send();
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // perform the initial search call
+      spotifySearch('acdc','artist',0);
+
+      // add eventlistener to do another search if the user types a new artist
+      document.getElementById('search').addEventListener('input', function(){
+    	var searchInput = document.getElementById('search').value;
+    	// check if the input contains more than 2 letters
+    	if (searchInput.length > 2) {
+    		// first clear everything inside the container.
+            document.getElementById('result').innerHTML = '';
+            // make a Spotify search request
+    		spotifySearch(searchInput,"artist",0);
+    	} 
+    });
+  });
+
+    
+  </script>
+</head>
+<body>
+<input type="search" id="search" placeholder="Search artist...">
+<div id="result">
+  <!-- this will contain the results from the spotify search.-->
+</div>
+</body>
+</html>
