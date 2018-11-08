@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Breakout #1</title>
+<script>
+console.log(x); // 1
+console.log(y); // 2
+var x = 1;
+let y = 2;
+
+function f (x) {
+  console.info(x, y); // 3
+  var buttons = [ '.first', '.second' ];
+
+  for (i = 0; i < buttons.length; i++) {
+    document.querySelector(buttons[i])
+      .addEventListener('click', () => console.log(i)); // 4
+  }
+}
+f(3);
+
+function g (y) {
+  x = 5 + y;
+  console.log(this); // 5
+  return () => x;
+}
+
+function h () {
+  this.x = x;
+  console.log(this); // 6
+}
+
+g(5).bind(15);
+new h();
+</script>
+<button class="first">First</button>
+<button class="second">Second</button>
