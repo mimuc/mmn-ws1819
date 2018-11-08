@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<title>MMN User Import</title>
+		<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<style>
+		body * {
+			font-family: 'Montserrat', sans-serif;
+		}
+		.a-user{
+			width:29%;
+			background-color: lightgrey;
+			border-radius: 3px;
+			border-color: darkgrey;
+			border-width: 2px;
+			border-style: solid;
+			float: left;
+			margin:2%;
+		}
+		.a-user img{
+			width:80%;
+			margin-left:10%;
+			margin-bottom:10px;
+		}
+		</style>
+		<script src="./Database.js"></script>	
+		<script type="text/javascript">	
+			document.addEventListener('DOMContentLoaded', ()=> {	
+				// some code that is already awesome - no need to change 			
+				let usersLoaded = 0;		
+				let persons = [];	
+				fetch('https://uinames.com/api/?amount=10&ext').then(response => {
+					response.json().then(users => {
+						document.getElementById('users').innerHTML = '';
+						users.forEach(aUser => {
+							persons.push(aUser);
+
+							const div = document.createElement('div');
+							div.innerHTML = `name: ${aUser.name}</div>`;
+							document.getElementById('users').appendChild(div);
+
+							usersLoaded++;
+							document.getElementById('users-counter').innerHTML=`${usersLoaded} users found`;
+						});
+
+						persons = users.map(aUser => {
+							return {
+								firstName: aUser.name,
+								lastName: aUser.surname,
+								age: aUser.age,
+								images: [aUser.photo],
+								roles: ["user"]
+							}
+						});
+					});
+				});
+
+		
+				// but from here on it becomes worse
+				// TODO apply as many of the advanced Javascript features you learnt!
+				// hint: all the stuff below this comment can be written in less than 10 lines of code ;)
+				function savePersonalData (data) {
+				  var name = data.name;
+				  var age = data.age;
+				  var avatar = data.images[0];
+				  var auth = AuthService.getAuth();
+
+				  var newData = {
+				    name: data.name,
+				    age: age,
+				    image: avatar,
+				    username: auth.username,
+				    password: auth.password,
+				    roles: data.roles,
+				  };
+
+				  Database.store(newData);
+				}			
+
+				document.querySelector('.save-btn').addEventListener('click', function (event) {
+				  var relevantPersons = [ ];
+				  for (var i = 0; i < persons.length; i++) {
+				    var person = persons[i];
+				    if (person.age > 18) {
+				      var roles = '';
+				      for (var j = 0; j < person.roles.length; j++) {
+				        roles += person.roles[j];
+				        if (j <= person.roles.length - 1) {
+				          roles += ', ';
+				        }
+				      }
+				      relevantPersons.push({
+				        name: person.firstName + ' ' + person.lastName,
+				        age: person.age,
+				        images: person.images,
+				        roles: roles,
+				      });
+				    }
+				  }
+				  for (var i = 0; i < relevantPersons.length; i++) {
+				    savePersonalData(relevantPersons[i]);
+				  }
+				});
+
+			});
+		</script>
+	</head>
+	<body>
+		<p>Available users that you can import into your database:</p>
+		<div id="users">
+			<p>Please wait while user data is stolen from the internet...</p>
+		</div>
+		<p id="users-counter">0 users found</p>
+		<input type="button" class="save-btn" value="Import into Database"></input>
+		<p><span id="users-imported">0</span> users imported into database</p>		
+
+		<div id="users-view">
+		</div>
+	</body>
+</html>
