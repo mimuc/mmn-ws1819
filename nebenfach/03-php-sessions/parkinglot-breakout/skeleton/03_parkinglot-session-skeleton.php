@@ -15,6 +15,7 @@
   <body>
     <div class="parking-spots"><div></div><div></div><div></div><div></div><div></div><div></div></div>
 <?php
+  $max_number_of_cars = 6;
   // Get the number of cars from the session
   $number_of_cars_before = /* TODO */;
   $number_of_cars = $number_of_cars_before;
