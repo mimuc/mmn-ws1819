@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fruits List Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- jQuery from a file: -->
+  <script src="../jquery.min.js"></script>
+</head>
+<body>
+<!-- Fruit List: -->
+<ul class="fruits"></ul>
+
+<label>Fruit: <input type="text" id="fruitInput"></label>
+<button>Add</button>
+
+<script>
+  var fruitList = $('ul.fruits');
+  var fruitInput = $('#fruitInput');
+  var button = $('button');
+  button.on('click', function() {
+    var userFruit = fruitInput.val();
+    var fruitItem = $('<li>' + userFruit + '</li>');
+    fruitList.append(fruitItem);
+    fruitInput.val(''); // reset.
+  });
+</script>
+</body>
+</html>

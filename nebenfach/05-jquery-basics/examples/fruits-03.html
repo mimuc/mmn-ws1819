@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fruits List Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery from a file: -->
+  <script src="../jquery.min.js"></script>
+</head>
+<body>
+<!-- Fruit List: -->
+<ul class="fruits"></ul>
+
+
+<script>
+  var fruits = ["Apple", "Apricot", "Avocado", "Banana", "Breadfruit", "Blackberry", "Blueberry", "Cantaloupe", "Currant", "Cherry", "Coconut", "Cranberry", "Cucumber", "Date", "Dragonfruit", "Durian", "Eggplant", "Elderberry", "Fig", "Gooseberry", "Grape", "Grapefruit", "Guava", "Huckleberry", "Kiwi fruit", "Kumquat", "Lemon", "Lime", "Loquat", "Lychee", "Mango", "Melon", "Miracle fruit", "Mulberry", "Nectarine", "Nut", "Olive", "Orange", "Papaya", "Passionfruit", "Peach", "Pepper", "Pear", "Physalis", "Plum/prune (dried plum)", "Pineapple", "Pomegranate", "Pomelo", "Raspberry", "Rambutan", "Star fruit", "Strawberry", "Tomato", "Ugli fruit"];
+  var fruitList = $('ul.fruits');
+
+  fruits.forEach(function(fruit) {
+    var fruitItem = $('<li>' + fruit + '</li>');
+    fruitList.append(fruitItem);
+  });
+</script>
+</body>
+</html>

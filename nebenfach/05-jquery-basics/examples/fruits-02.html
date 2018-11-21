@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fruits List Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery from a file: -->
+  <script src="../jquery.min.js"></script>
+</head>
+<body>
+<!-- Fruit List: -->
+<ul class="fruits">
+  <li class="favorite">Apple</li>
+  <li>Apricot</li>
+  <li>Avocado</li>
+  <li class="favorite">Banana</li>
+  <li>Breadfruit</li>
+  <li>Blackberry</li>
+  <li class="favorite">Blueberry</li>
+</ul>
+
+
+<script>
+  var fruitList = $('ul.fruits');
+  var favoriteFood = $('li.favorite');
+
+  fruitList.prepend(favoriteFood);
+</script>
+</body>
+</html>
