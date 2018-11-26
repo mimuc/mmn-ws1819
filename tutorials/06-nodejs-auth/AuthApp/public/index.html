@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Restricted Multimedia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<body>
+<header>
+  <span class="appName">Access Restricted Multimedia</span>
+</header>
+<div class="card vcard">
+  <div>
+    <button id="auth">Request JWT</button>
+    <input id="authKey" placeholder="API key" type="password">
+  </div>
+  <div>
+    <button id="rm" class="rm">Delete JWT</button>
+    <textarea id="tokenOut" class="term"></textarea>
+  </div>
+</div>
+<div class="card hcard">
+  <button id="req">Request secret data</button>
+  <textarea id="out"></textarea>
+</div>
+
+<script>
+  const STORAGE_KEY = 'token';
+  const URLS = {
+    AUTH: 'http://localhost:3000/auth/',
+    DATA: 'http://localhost:3000/private/',
+  };
+
+  window.onload = function() {
+    const auth = document.getElementById('auth');
+    const authKey = document.getElementById('authKey');
+    const req = document.getElementById('req');
+    const out = document.getElementById('out');
+    const rm = document.getElementById('rm');
+    const tokenOut = document.getElementById('tokenOut');
+
+    // Requesting a JWT
+    auth.addEventListener('click', () => {
+      const key = authKey.value;
+      fetch(URLS.AUTH, {
+        method: 'POST',
+        body: JSON.stringify({ key }),
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+        .then((res) => res.json())
+        .then(({ token, error }) => {
+          if (error) {
+            tokenOut.innerText = error;
+          } else if (token) {
+            sessionStorage.setItem(STORAGE_KEY, token)
+            out.innerText = '';
+            tokenOut.innerText = token;
+          }
+        })
+        .catch((err) => console.error(err));
+    });
+
+    // Requesting data with the JWT
+    req.addEventListener('click', () => {
+      const token = sessionStorage.getItem(STORAGE_KEY);
+      fetch(URLS.DATA, { headers: token ? { 'Authorization': `Bearer ${token}` } : { } })
+        .then((res) => res.json())
+        .then((message) => out.innerText = JSON.stringify(message, null, 4))
+        .catch((err) => out.innerText = JSON.stringify(err, null, 4));
+    });
+
+    // Removing the JWT
+    rm.addEventListener('click', () => {
+      sessionStorage.removeItem(STORAGE_KEY);
+      tokenOut.innerText = '';
+      out.innerText = '';
+    });
+
+    tokenOut.innerText = sessionStorage.getItem(STORAGE_KEY) || '';
+    authKey.focus();
+  }
+</script>
+</body>
+</html>

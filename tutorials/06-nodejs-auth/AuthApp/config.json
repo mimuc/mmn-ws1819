@@ -1,0 +1,8 @@
+{
+  "SECRET": "TODO",
+  "API_KEY": "TODO",
+  "JWT": {
+    "ISSUER": "de.lmu.ifi.medien.mmn",
+    "AUDIENCE": "http://localhost:3000"
+  }
+}
