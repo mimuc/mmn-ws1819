@@ -1,0 +1,37 @@
+<html>
+<head>
+	</head>
+	<body>
+		<div>
+			<button onclick="document.getElementById('file-input').click();">Open</button>
+			<input id="file-input" type="file" name="name" style="display: none;" />
+		</div>
+		<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      console.log(readTextFile(f))
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  document.getElementById('file-input').addEventListener('change', handleFileSelect, false);
+
+  function readTextFile(file)
+{
+    const reader = new FileReader()
+	reader.onload = event => {
+		json = JSON.parse(event.target.result);
+		unwrappedJson = json.tracks.items;
+		document.querySelector('div').innerHTML = JSON.stringify(unwrappedJson);
+
+	} // desired file content
+	reader.onerror = error => reject(error)
+	reader.readAsText(file) // you could also read images and other binaries
+}
+</script>
+	</body>
+</html>
