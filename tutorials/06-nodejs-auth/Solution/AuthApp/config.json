@@ -1,0 +1,8 @@
+{
+  "SECRET": "top-secret-mmn-key",
+  "API_KEY": "apikey",
+  "JWT": {
+    "ISSUER": "de.lmu.ifi.medien.mmn",
+    "AUDIENCE": "http://localhost:3000"
+  }
+}
