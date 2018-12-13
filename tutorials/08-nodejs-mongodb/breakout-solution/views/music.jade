@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  each val in tracks
+    h1= val.name
+    p #{val.artists[0].name}
+    p popularity: #{val.popularity}
