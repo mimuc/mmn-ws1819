@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  div.filter-container
+    form(method='GET')
+      div.form-group
+        label(for='searchtext') Search Text:
+        input#name.form-control(type='text', placeholder='track name or album' name='searchtext')
+      div.form-group
+        p select artists
+        each artist in artists
+          div.artistcheckbox
+            input.checkbox-input(type='checkbox', name='artists[]', value=artist.name, id=`arist-${artist.name}`, checked)
+            label(for=`artist-${artist.name}`) #{artist.name}
+      button.btn.btn-primary(type='submit') Search
+  div.output
+    each val in tracks
+      h1= val.name
+      p #{val.artists[0].name}
+      p popularity: #{val.popularity}

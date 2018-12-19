@@ -1,0 +1,18 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.artistcheckbox{
+  float:left;
+  margin:10px;
+}
+.output{
+  margin-top:20px;
+}
+.form-group{
+  overflow: hidden;
+}
