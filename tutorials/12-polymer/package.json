@@ -1,0 +1,22 @@
+{
+  "name": "mmn-counter",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "polymer serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mimuc/mmn-ws1819.git"
+  },
+  "author": "Thomas Weber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mimuc/mmn-ws1819/issues"
+  },
+  "homepage": "https://github.com/mimuc/mmn-ws1819#readme",
+  "dependencies": {
+    "@polymer/polymer": "^3.1.0"
+  }
+}
