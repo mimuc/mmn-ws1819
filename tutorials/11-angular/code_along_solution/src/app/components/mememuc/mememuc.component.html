@@ -1,0 +1,27 @@
+<ul class="meme-list">
+  <li
+    *ngFor="let meme of memeOptions"
+    (click)="selectBaseImage(meme)"
+  >
+    <img [src]="meme.link">
+  </li>
+</ul>
+
+<div class="results">
+  <img *ngIf="memeUrl" [src]="memeUrl" alt="Your custom meme">
+  <h3 *ngIf="!memeUrl">No Meme Selected</h3>
+</div>
+
+<div class="params">
+  <div class="texts">
+    <input [(ngModel)]="caption.top.text" placeholder="Upper Text">
+    <input [(ngModel)]="caption.bottom.text" placeholder="Lower Text">
+  </div>
+  <div class="positions">
+      <input [(ngModel)]="caption.top.x" type="number" placeholder="Upper Text">
+      <input [(ngModel)]="caption.top.y" type="number" placeholder="Lower Text">
+      <input [(ngModel)]="caption.bottom.x" type="number" placeholder="Upper Text">
+      <input [(ngModel)]="caption.bottom.y" type="number" placeholder="Lower Text">
+  </div>
+</div>
+
