@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>MemeMUC &ndash; The MMN Meme-Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="script-skeleton.js"></script>
+  </head>
+  <body>
+    <header><h1>MemeMUC &ndash; The MMN Meme-Generator</h1></header>
+    <div class="content">
+      <aside>
+        <input type="search" id="searchInput" placeholder="Search for memes">
+        <ul>
+          <li><img src="http://flobe-online.de:3002/memes/doge"></li>
+        </ul>
+        <button>Save</button>
+      </aside>
+
+      <main>
+        <div class="meme"><img src="placeholder.png"></div>
+        <div class="params">
+          <input type="text" id="text" name="text" placeholder="Upper Text">
+          <input type="number" id="x" name="x" placeholder="X Offset">
+          <input type="number" id="y" name="y" placeholder="Y Offset">
+
+          <input type="text" id="text2" name="text2" placeholder="Lower Text">
+          <input type="number" id="x2" name="x2" placeholder="X Offset">
+          <input type="number" id="y2" name="y2" placeholder="Y Offset">
+        </div>
+        <div class="meme-selection">
+          <ul>
+            <li><img src="http://flobe-online.de:3002/memes/doge"></li>
+            <li><img src="http://flobe-online.de:3002/memes/raptor"></li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
