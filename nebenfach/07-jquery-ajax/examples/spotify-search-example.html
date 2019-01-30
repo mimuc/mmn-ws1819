@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Spotify Artist Results</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<button id="loadButton">Click to load artists</button>
+<ul id="artistList"></ul>
+<script>
+  var loadButton = $('#loadButton');
+  loadButton.click(function() {
+    var searchURL = 'http://spotify-proxy-mmn.193b.starter-ca-central-1.openshiftapps.com/search';
+    $.get(
+      // first parameter: URL
+      searchURL,
+      // second parameter: GET query parameters
+      {
+        q: 'red hot',
+        type: 'artist',
+        key: '--- provided by MMN staff ---'
+      },
+      // third parameter: handler function.
+      function(data) {
+
+        var artists = data.artists.items;
+        // first clear everything inside the body / container.
+        $('#artistList').empty();
+
+        // loop through the artists and generate a list item for each one
+        artists.forEach(function(artist) {
+          var artistItem = $('<li>');
+          // put the artists' name into list item
+          artistItem.html(artist.name);
+
+          // append the artist list item to the list
+          $('#artistList').append(artistItem);
+        });
+      }
+    );
+  });
+</script>
+</body>
+</html>

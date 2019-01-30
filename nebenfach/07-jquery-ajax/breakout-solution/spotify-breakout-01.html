@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Breakout</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font: 14px Helvetica, Arial, sans-serif;
+    }
+    input[type=text], input[type=search] {
+      display: block;
+      height: 50px;
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid deeppink;
+      border-radius: 5px;
+      color: deeppink;
+      outline: none;
+      margin: 10px 0;
+      width: 250px;
+      transition: width 0.3s ease-in-out;
+      -webkit-transition: width 0.3s ease-in-out;
+    }
+
+    input[type=text]:focus, input[type=search]:focus {
+      width: 450px;
+    }
+
+    button {
+      width: 150px;
+      height: 40px;
+      border-radius: 5px;
+      outline: none;
+      border: 0;
+      text-transform: uppercase;
+      background-color: deeppink;
+      color: white;
+      transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), /*bottom*/
+                  0 1px 5px 0 rgba(0, 0, 0, 0.12), /*sides*/
+                  0 3px 1px -2px rgba(0, 0, 0, 0.2); /*top*/
+      background-color: white;
+      color: black;
+    }
+
+
+    #artistList {
+      display: flex;
+      flex-wrap: wrap;
+      list-style-type:none;
+      padding: 0;
+    }
+    #artistList li {
+      flex: 1;
+      margin: 10px;
+      background-color: dodgerblue;
+      color: white;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+  </style>
+</head>
+<body>
+<input type="search" id="searchInput" placeholder="Search artist...">
+<button id="searchButton">Search Artist</button>
+<ul id="artistList"></ul>
+
+<script>
+
+  // first select all elements that we are going to need.
+  var artistList = $('#artistList');
+  var searchField = $('#searchInput');
+  var button = $('#searchButton');
+
+  // we only start searching when the user clicks the button
+  button.click(function() {
+    // read the current value of the search field
+    var query = searchField.val();
+    searchByArtist(query);
+  });
+
+  /**
+   * This searches the spotify database for a given artist name
+   * and puts the artists as list items (<li>) into <ul id="artistList">
+   * @param artist
+   */
+  function searchByArtist(artist) {
+
+    var searchURL = 'http://spotify-proxy-mmn.193b.starter-ca-central-1.openshiftapps.com/search';
+
+    var queryParameters = {
+      q: artist, // artist is passed as parameter to this function.
+      type: 'artist',
+      limit: 50, // how many artists do we need?
+      key: // the KEY from the tutorials
+    };
+
+    // perform the GET request.
+    $.get(searchURL, queryParameters, function(data) {
+      var artists = data.artists.items;
+
+      // first clear everything inside the <ul id="artistList">
+      artistList.empty();
+
+      // loop through the artists and generate some html for each one.
+      artists.forEach(function(artist) {
+        // construct a container and a couple of elements
+        var artistItem = $('<li>');
+        // put the artists' name into list item
+        artistItem.html(artist.name);
+
+        // add things together;
+        artistList.append(artistItem);
+      });
+
+    });
+  }
+</script>
+</body>
+</html>

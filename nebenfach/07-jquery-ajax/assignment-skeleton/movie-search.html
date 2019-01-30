@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MMN Movie Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://www.medien.ifi.lmu.de/lehre/ws1617/mmn/uebung/material/assignments.css">
+  <style>
+
+    input[type=text], input[type=search] {
+      display: block;
+      height: 50px;
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid deeppink;
+      border-radius: 5px;
+      color: deeppink;
+      outline: none;
+      margin: 10px auto;
+      width: 250px;
+      max-width: 100%;
+      transition: width 0.2s ease-in-out;
+      -webkit-transition: width 0.2s ease-in-out;
+    }
+
+    input[type=text]:focus, input[type=search]:focus {
+      width: 450px;
+    }
+
+    .movie {
+      min-width: 280px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .poster {
+      width: 100%;
+      min-height: 400px;
+      margin: auto;
+      display: block;
+      flex: 1;
+      background-color: #eee;
+    }
+
+    h2, h3 {
+      text-transform: capitalize;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+</head>
+<body>
+
+<!-- HTML Part of the Web Page-->
+<header><span>Movie Search</span></header>
+
+<div id="container">
+  <input type="search" placeholder="Search Movie..." id="searchBox"/>
+  <div id="result" class="flexParent">
+    No result available. Try typing in the search box...
+  </div>
+</div>
+
+
+<!-- Script part of the Web Page-->
+
+<script>
+  var searchBox = $('#searchBox');
+
+  /**
+   * generates a div that displays a movie poster (or placeholder)
+   * a title, type and the year.
+   * @param {String} title of the movie
+   * @param {String} type of the move (movie/series/episode)
+   * @param {Number} year
+   * @param {String} posterURL
+   * @return {jQuery|HTMLElement} with class "movie flexChild card"
+   */
+  function generateMovieDiv(title, type, year, posterURL) {
+    // we need a couple of elements which we create with jQuery.
+    var movieDiv = $('<div class="movie flexChild card">');
+    var poster = $('<div class="poster">&nbsp;</div>');
+    var titleH2 = $('<h2 class="title">');
+    var subTitleH3 = $('<h3 class="subtitle">');
+    var yearDiv = $('<div class="year">');
+
+    // now that we have all elements, we add the content into them.
+    titleH2.html(title);
+    subTitleH3.html(type);
+    yearDiv.html(year);
+    // posters are always optional, so we only do
+    // the necessary steps, if there is a posterURL avaiable
+    if (posterURL && posterURL != 'N/A') {
+      poster.css('background', 'center no-repeat url(' + posterURL + ') #eee');
+    }
+
+    // put things together
+    //  .movie
+    //   |
+    //   - div.poster
+    //   - h2.title
+    //   - h3.subtitle
+    //   - div.year
+    movieDiv.append(poster, titleH2, subTitleH3, yearDiv);
+
+    // return what we have generated.
+    return movieDiv;
+  }
+
+  /**
+   * callback function for handling AJAX requests.
+   * this function can be used as the third parameter of $.get()
+   *
+   * @param {Object} data contains the server's response!
+   */
+  function handleResponse(data) {
+    var resultDiv = $('#result');
+    resultDiv.empty();
+
+    // TODO
+    // data.Search is an Array that contains the films
+    // each film is structured like this:
+
+    // Poster: "<posterURL> or N/A",
+    // Title: "Ghostbusters",
+    // Type: "movie",
+    // Year: "1985",
+    // imdbID: "<id used on IMDB.com>"
+
+    // now: do these steps:
+    // a) loop through data.Search
+    // b) use the generateMovieDiv function to create
+    //    an element for each movie.
+    //    pass it the correct parameters as documented above.
+    // c) append the new element to the resultDiv.
+
+  }
+
+  /**
+   * searches omdbapi.com for a movie.
+   *
+   * @param {String} title of the movie
+   */
+  function search(title) {
+    var url = 'http://www.omdbapi.com/';
+    var parameters = {
+      s: title
+      apikey: 'be575585' 
+    };
+    var callback = handleResponse;
+
+
+    // TODO
+    // we want to make an Ajax request to omdbapi.com
+    // use the methods shown in the tutorial to
+    // create a GET request and add the correct
+    // first, second and third parameter to the method.
+
+  }
+
+
+  // let's add an event listener to the search box
+  // the event listener is called whenever an 'input'
+  // event occurs. In that case, the search is started.
+  searchBox.on('input', function() {
+
+    var query = $(this).val();
+    if (query.length > 1) {
+      search(query);
+    }
+  });
+
+</script>
+</body>
+</html>

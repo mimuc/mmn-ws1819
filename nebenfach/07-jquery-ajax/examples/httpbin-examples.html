@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX testing with httpbin</title>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <style>
+    #result {
+      padding: 1em;
+      display: block;
+      height: 500px;
+      font-family: monospace;
+      white-space: pre;
+    }
+  </style>
+  <script>
+
+
+    function testGET() {
+
+      $.get(
+        // first parameter: URL
+        'http://httpbin.org/get',
+        // second parameter: GET query parameters, which will be attached to the url, so
+        // this will become http://httpbin.org/get?myMessage=Ajax is nice!
+        {
+          myMessage: 'Ajax is nice!'
+        },
+        // third parameter: Callback function, which is called when the request is done.
+        function(data) {
+          // we replace the content of <div id="result"> with the data we received.
+          $('#result').html(JSON.stringify(data, null, 4));
+        }
+      );
+
+    }
+
+    function testPOST() {
+      // we're using a convenience method to perform a request via HTTP POST
+      // also, it's okay to use an URL as the first parameter and pass the settings
+      // as second paramter.
+      $.post(
+        // first parameter: URL
+        'http://httpbin.org/post',
+        // second parameter: POST Parameters, which are added to the HTTP message body (not into URL)
+        {
+          myPostMessage: 'Wow, post is also easy.'
+        },
+        // third parameter: Callback function, which is called when the request is done.
+        function(data) {
+          $('#result').html(JSON.stringify(data, null, 4));
+        }
+      );
+    }
+
+    $(document).ready(function() {
+      // add the event Listeners
+      $('#getButton').click(testGET);
+      $('#postButton').click(testPOST);
+    })
+  </script>
+</head>
+<body>
+
+<button id="getButton">Test GET</button>
+<button id="postButton">Test POST</button>
+
+<div id="result"></div>
+
+</body>
+</html>
