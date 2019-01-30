@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    iframe {
+      height: 320px;
+      width: 100%;
+      border: 0;
+      display: none;
+    }
+
+    .card > * {
+      margin: 10px 0;
+      display: block;
+    }
+
+    .info {
+      display: flex;
+      align-items: center;
+    }
+
+    .info > img {
+      flex: none;
+      height: 64px;
+      width: 64px;
+      margin-right: 16px;
+    }
+
+    .info > button {
+      width: 100px;
+      flex: none;
+    }
+
+    .info > * {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+<header><h2>Address Book</h2></header>
+<div id="container">
+</div>
+<!-- put stylesheets and scripts here to make page load faster. -->
+<link rel="stylesheet" href="http://www.medien.ifi.lmu.de/lehre/ws1617/mmn/uebung/material/assignments.css">
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+<script>
+  const url = 'https://jsonplaceholder.typicode.com/users';
+  let container = $('#container');
+
+/**
+ * Takes the users data from in JSON form, e.g. from the API
+ * @param {JSON} JSON object containing the users data
+ */
+  function parseAndShowData(jsonData) {
+    // The users are stored in an array (in JSON), so loop through it to process each user.
+    // The anonymous function of the forEach-loop gets the value/user as the first parameter and the index as second
+    jsonData.forEach((user, index) => {
+      /**
+       * The userCard is the central div for each user
+       */
+      let userCard = $('<div class="card">');
+      // We now create divs of the class info for each information to be displayed (in one row)
+      let nameRow = $('<div class="info">');
+      let addressRow = $('<div class="info">');
+      let emailRow = $('<div class="info">');
+      let websiteRow = $('<div class="info">');
+      // Links to the homepage and e-mail of the user, empty right now
+      let link = $('<a>Homepage</a>');
+      let email = $('<a>');
+      // The map is displayed inside an iframe and displayed/hidden with a button
+      let showMapButton = $('<button>Show Map</button>');
+      let mapFrame = $('<iframe style="display: none">');
+
+      // Each user gets the id of his*her index in the users array in order to be identificable,
+      // which is needed to get the users coordinates for the map later on
+      userCard.attr('id', index);
+
+      // Append a image with an user-icon to the nameRow-div
+      nameRow.append('<img src="user.png">');
+      // Append a new heading with the name of the user (from the JSON) to the nameRow-div
+      nameRow.append("<h2>" + user.name + "</h2>");
+
+      // Same for the address, nicely formatted
+      addressRow.append('<img src="home.png">');
+      addressRow.append("<h2>" +
+      user.address.street + " " +
+      user.address.suite + ", " +
+      user.address.zipcode + " " +
+      user.address.city  +
+      "</h2>");
+
+      emailRow.append('<img src="pencil.png">');
+      // Add a target to the users e-mail-address to the link
+      email.attr('href', 'mailto:' + user.email);
+      // Set the content, respectively the text to display as a link
+      email.html(user.email);
+      emailRow.append($('<h2>').append(email));
+
+      websiteRow.append('<img src="computer.png">');
+      link.attr('href', "http://" + user.website);
+      let heading = $("<h2>");
+      heading.append(link);
+      websiteRow.append(heading);
+
+      // Now append everything to the userCard and append that to the container-div
+
+      userCard.append(nameRow);
+      userCard.append(addressRow);
+      userCard.append(websiteRow);
+      userCard.append(emailRow);
+      userCard.append(showMapButton);
+      userCard.append(mapFrame);
+
+      container.append(userCard);
+
+      // Add the event-handler for the map-button
+      showMapButton.click(function() {
+        // Now it's getting kind of tricky:
+        // Get the current userCard by accessing the parents of the button with the class "card"
+        let card = $(this).parents('.card');
+        // Get the map frame by finding the iframe-element in the card
+        let mapFrame = card.find('iframe');
+        let frameURL = 'http://www.openstreetmap.org/export/embed.html?';
+        // Get the user in the JSON by using his*her index to identify him*her in the array
+        let user = jsonData[card.attr('id')];
+
+        // If the user exists, has an address and coordinates and the map isn't displayed yet:
+        if (user && user.address && user.address.geo && !mapFrame.attr('src')) {
+          // Set a marker to the users coordinates
+          frameURL += 'marker=' + user.address.geo.lat + ',' + user.address.geo.lng;
+          mapFrame.attr('src', frameURL);
+        }
+        // Displays the map frame, when it's hidden and hide it, when it's visible
+        mapFrame.toggle();
+        // Change the buttons value from 'Show Map' to 'Hide Map' and vice versa
+        $(this).html($(this).html().toLowerCase() == 'show map' ? 'Hide Map' : 'Show Map');
+      });
+    });
+  }
+
+  // Finally do the AJAX-get-Request, no get-parameters required.
+  // The result is processed in the function parseAndShowData above (callback)
+  $.get(url, null, parseAndShowData);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users List</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    iframe {
+      height: 320px;
+      width: 100%;
+      border: 0;
+      display: none;
+    }
+
+    .card > * {
+      margin: 10px 0;
+      display: block;
+    }
+
+    .info {
+      display: flex;
+      align-items: center;
+    }
+
+    .info > img {
+      flex: none;
+      height: 64px;
+      width: 64px;
+      margin-right: 16px;
+    }
+
+    .info > button {
+      width: 100px;
+      flex: none;
+    }
+
+    .info > * {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+<header><h2>Address Book</h2></header>
+<div id="container">
+</div>
+<!-- put stylesheets and scripts here to make page load faster. -->
+<link rel="stylesheet" href="http://www.medien.ifi.lmu.de/lehre/ws1617/mmn/uebung/material/assignments.css">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+  
+  // TODO
+  // Lo and behold, we're going to add a lot of things here.
+
+  var url = 'https://jsonplaceholder.typicode.com/users';
+  $.get(url,null, function(addresses){
+    addresses.forEach(function(addressObject){
+      var user = $('<div class="card">');
+      var nameEl = $('<div>').html(addressObject.name);
+      var emailEl = $('<div>').html(addressObject.email);
+      var phoneEl = $('<div>').html(addressObject.phone);
+      var websiteEl =$('<div>').html(addressObject.website);
+
+      var imgEl = $('<img>');
+
+      var imageURL = 'http://www.medien.ifi.lmu.de/lehre/ws1617/mmn/uebung/material/user.png';
+      imgEl.attr('src', imageURL);
+
+      user.append(imgEl, nameEl, emailEl, phoneEl, websiteEl);
+      $('#container').append(user);
+    });
+
+  });
+
+</script>
+</body>
+</html>

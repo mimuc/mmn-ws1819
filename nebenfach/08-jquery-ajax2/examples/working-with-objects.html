@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Working with JavaScript Objects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="output"></div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+  var someObject = {
+    name: 'Gustav Gans',
+    artist: 'Beginner',
+    album: 'Blast Action Heroes',
+    length: 232
+  };
+
+  // you can access the "name" property of someObject
+  // by using the dot notation. Like this:
+  $('#output').append(someObject.name);
+
+
+  // or, if you remember PHP, you can also access
+  // the properties like so:
+  $('#output').append(someObject['artist']);
+
+</script>
+</body>
+</html>

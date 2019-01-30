@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Working with JavaScript Objects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div id="output"></div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+  var someObject = {
+    name: 'Gustav Gans',
+    artist: 'Beginner',
+    album: 'Blast Action Heroes',
+    length: 232
+  };
+
+  var anotherObject = {
+    name: 'Augen zu',
+    artist: 'Kobito & Sookee',
+    album: 'Deine Elstern',
+    length: 311
+  };
+
+  var allMyObjects = [someObject, anotherObject];
+
+  allMyObjects.forEach(function(oneObject) {
+    $('#output').append(oneObject.artist);
+    $('#output').append('<br />');
+  });
+</script>
+</body>
+</html>
