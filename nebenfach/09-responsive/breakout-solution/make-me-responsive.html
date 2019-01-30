@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+
+    /* general layout */
+
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Roboto, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, sans-serif;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      height: 4rem;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+
+      background-color: #03a9f4;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, .18),
+        0 2px 6px rgba(0, 0, 0, .12),
+        0 3px 12px rgba(0, 0, 0, .06);
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* Navigation */
+
+    nav {
+      position: fixed;
+      width: 80vw;
+      right: -80vw;
+      top: 4rem;
+      bottom: 0;
+
+      background-color: #607d8b;
+      color: #fff;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, .18),
+        0 2px 6px rgba(0, 0, 0, .12),
+        0 3px 12px rgba(0, 0, 0, .06);
+      transition: right .5s ease-in-out;
+    }
+
+    nav.open {
+      right: 0;
+    }
+
+    nav ul {
+      padding: 0;
+      margin: 0;
+
+      list-style-type: none;
+    }
+
+    nav li:nth-of-type(2n) {
+      background-color: rgba(0, 0, 0, .1);
+    }
+
+    nav a {
+      display: block;
+      padding: 1rem;
+
+      text-decoration: none;
+      color: inherit;
+    }
+
+    nav a:hover {
+      background-color: rgba(0, 0, 0, .2);
+    }
+
+    .to-top {
+      display: block;
+      background-color: #607d8b;
+      border-radius: 50%;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      height: 4rem;
+      width: 4rem;
+      border: none;
+      color: #fff;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, .3),
+        0 2px 6px rgba(0, 0, 0, .2),
+        0 3px 12px rgba(0, 0, 0, .1);
+    }
+
+    /* Content */
+
+    main {
+      display: flex;
+      flex-direction: row;
+    }
+
+    section {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    section h2 {
+      padding: 0 0 .5rem;
+      margin: 0 0 1rem;
+      font-size: 2rem;
+      font-weight: 300;
+      border-bottom: thin dotted #607d8b;
+    }
+
+    aside p {
+      padding: .5rem 1rem;
+      text-align: justify;
+      border-left: thin solid #607d8b;
+      background-color: rgba(96, 125, 139, .1);
+    }
+
+    aside img {
+      max-width: 100%;
+
+      border-radius: 4px;
+    }
+
+    /*
+      Level one:
+        - Navigation hidden in mobile, show via the .open class via jQuery
+        - Navigation shown on the left in desktop
+     */
+
+    @media (min-width: 48rem) {
+      header img {
+        display: none;
+      }
+
+      nav {
+        position: static;
+        min-width: 16rem;
+        max-width: 24rem;
+
+        background-color: transparent;
+        box-shadow: none;
+        color: #111;
+      }
+
+      nav ul li {
+        background-color: transparent;
+      }
+
+      .to-top {
+        display: none;
+      }
+
+      aside {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+
+      article p {
+        padding-top: 1rem;
+      }
+    }
+
+    /*
+      Level two
+      - Fancy stuff!
+     */
+
+    @media (min-width: 64rem) {
+      body {
+        padding-top: 4rem;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        height: 2rem;
+      }
+
+      nav ul {
+        display: flex;
+        flex-direction: row;
+        height: 4rem;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 1rem;
+        color: #fff;
+      }
+
+      .container nav ul li {
+        background-color: transparent;
+      }
+
+      section h2 {
+        margin: 2rem auto;
+        width: 100%;
+        max-width: 64rem;
+      }
+
+      aside {
+        flex-direction: column-reverse;
+        width: calc(100vw - 3rem);
+      }
+
+      aside p {
+        margin: 1rem auto;
+        max-width: 64rem;
+      }
+
+      aside img {
+        width: calc(100% + 2rem);
+        max-width: none;
+        margin: 0 -1rem;
+        border-radius: 0;
+      }
+
+      article p {
+        margin: 0 auto;
+        max-width: 64rem;
+      }
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script>
+
+    $(function () {
+      $('#navMenuButton').click(function () {
+        $('nav').toggleClass('open');
+      });
+    });
+
+    function toTop () {
+      window.scrollTo(0, 0);
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <span>My Page</span>
+    <span class="spacer"></span>
+    <img src="burger.svg" id="navMenuButton">
+  </header>
+
+  <main class="container">
+    <nav>
+      <ul>
+        <li><a href="#">Page Uno</a></li>
+        <li><a href="#">Page Due</a></li>
+        <li><a href="#">Page Tre</a></li>
+      </ul>
+    </nav>
+
+    <section>
+      <h2>My Article</h2>
+      <aside class="teaser">
+        <img src="ci.jpg" class="cover">
+        <p class="short-description">
+          Bavaria ipsum dolor sit amet kimmt nia need in da vui huift vui auszutzeln. Hoggd
+          baddscher sammawiedaguad gscheit des is a gmahde Wiesn ma ded Buam Weißwiaschd a Maß und no a Maß owe: San wuid
+          d’ Schorsch, i oa! Ramasuri ma guad oba des is a gmahde Wiesn Sauwedda auf’d Schellnsau des wiad a Mordsgaudi!
+          Schaung kost nix greaßt eich nachad gscheid ham Leonhardifahrt, aasgem mim Woibbadinga jedza. Lewakaas
+          Woibbadinga sauba geh noch da Giasinga Heiwog.
+        </p>
+      </aside>
+      <article>
+        <p>
+          Charivari ham kimmt, aba Namidog Enzian Maibam a Hoiwe des is hoid aso moand Radi: Kummd is sog i des is a
+          gmahde Wiesn wos is ma Wuascht hoggd Brezn heitzdog. Sauakraud a bravs Mamalad naa measi gwihss. Schbozal sodala
+          di o’ha Biagadn woaß i hob di narrisch gean boarischer Biakriagal.
+        </p>
+        <p>
+          Woibbadinga wuid eam a geh, an unbandig. Sepp Charivari blärrd trihöleridi dijidiholleri gwiss pfenningguat
+          heitzdog! Brotzeit is des liab zwoa, Gstanzl. Ognudelt geh Stubn Griasnoggalsubbm pfundig, is ma Wuascht.
+          Diandldrahn ognudelt hob i an Suri mi, fensdaln. Schbozal eana blärrd sei Haferl Foidweg von Buam liberalitas
+          Bavariae scheans sauba. So Weiznglasl ned, Biagadn nia need pfiad de a Maß und no a Maß! Bittschön mim weida,
+          von moand etza no a Maß aasgem jo mei hogg di hera? Zidern es zünftig owe Schorsch, lem und lem lossn fias i
+          moan oiwei Schdarmbeaga See jedza? De Marei auf der Oim, da gibt’s koa Sünd um Godds wujn sowos dei Blosmusi,
+          mei Watschnbaam singan sammawiedaguad? Gaudi ja, wo samma denn jo mei!
+        </p>
+        <p>
+          Is Hendl aba midanand Radi: Boarischer hawadere midananda Spotzerl, d’ Charivari samma midanand. Dahoam Brezn
+          nois Schbozal Radi, Bradwurschtsemmal. Baddscher Stubn eam Oachkatzlschwoaf vui huift vui auffi iabaroi, ozapfa
+          sei Maderln auffi! Sauba des muas ma hoid kenna zwoa weida soi Hendl, samma sog i amoi. Obacht i hob di narrisch
+          gean fias Hetschapfah Musi de Sonn wia da Buachbinda Wanninger muass. Milli hob i an Suri kimmt dahoam obandln
+          wo hi damischa Schdeckalfisch a fescha Bua. Ma a Prosit der Gmiadlichkeit samma hoggd no a Maß obacht mi griaß
+          God beinand obandln Enzian a bissal. I mechad dee Schwoanshaxn Kuaschwanz g’hupft wia gsprunga ham ghupft wia
+          gsprunga bittschön mei Hemad des mi. Zwedschgndadschi abfieseln i, wos.
+        </p>
+      </article>
+      <button class="to-top" onclick="toTop()">Go to Top</button>
+    </section>
+  </div>
+</body>
+</html>

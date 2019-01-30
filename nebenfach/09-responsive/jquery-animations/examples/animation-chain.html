@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Animation Chain</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <style>
+    body, html { height: 100%; position: relative; overflow: hidden;}
+    #targetElement { width: 100%; height: 80%; background-color: deepskyblue}
+  </style>
+</head>
+<body>
+<button>Animate!</button>
+<div id="targetElement"></div>
+
+<script>
+ var animateButton = $('button');
+ var targetEl = $('#targetElement');
+ animateButton.click(function() {
+   targetEl.fadeOut(1000).slideDown(1000)
+           .delay(500)
+           .slideUp().fadeIn();
+ })
+</script>
+</body>
+</html>

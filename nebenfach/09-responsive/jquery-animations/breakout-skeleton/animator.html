@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hide Elements</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <style>
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      color: white;
+      font: 20px sans-serif;
+    }
+
+    .fader, .slider {
+      min-width: 100px;
+      height: 100px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 1em;
+      cursor: pointer;
+    }
+
+    .fader {
+      background-color: dodgerblue;
+    }
+
+    .slider {
+      background-color: deeppink;
+    }
+
+    #resetDiv {
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="fader">Fade Me!</div>
+<div class="slider">Slide Me!</div>
+<div class="fader">Fade Me!</div>
+<div class="slider">Slide Me!</div>
+<div class="fader">Fade Me!</div>
+<div class="slider">Slide Me!</div>
+
+<div id="resetDiv">
+  <button>Reset</button>
+</div>
+
+<script>
+  // your code goes here
+</script>
+
+</body>
+</html>

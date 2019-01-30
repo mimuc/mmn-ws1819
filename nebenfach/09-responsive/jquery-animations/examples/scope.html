@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Variable Scopes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<script>
+  var count = 0;
+
+  function testOne() {
+    var count = 1;
+    document.writeln(count);
+  }
+  function testTwo() {
+    count = count + 1;
+    document.writeln(count);
+  }
+
+  // test scopes:
+  document.writeln(count);  // a) ?
+  testOne();                // b) ?
+  testTwo();                // c) ?
+  testTwo();                // d) ?
+  document.writeln(count-1);// e) ?
+  document.writeln(count);  // f) ?
+</script>
+</body>
+</html>
