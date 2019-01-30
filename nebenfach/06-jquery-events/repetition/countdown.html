@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Counter Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <style>
+    body, html {
+      font: bold 100px sans-serif;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    #container {
+      flex: 1;
+      text-align: center
+    }
+    button {
+      width: 50px;
+      height: 50px;
+      border: none; outline: none;
+      background-color: deeppink;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight:bold;
+    }
+    button:hover {
+      background-color: deepskyblue;
+    }
+  </style>
+</head>
+<body>
+<div id="container">
+  <div id="counterElement"></div>
+  <button id="down">-</button>
+</div>
+<script>
+
+  var currentCount = 100;
+  var downButton = $('#down');
+  var counterEl = $('#counterElement');
+
+  downButton.click(function() {
+    currentCount = currentCount - 1;
+    counterEl.html(currentCount);
+  });
+
+  // first paint:
+  counterEl.html(currentCount);
+</script>
+</body>
+</html>
