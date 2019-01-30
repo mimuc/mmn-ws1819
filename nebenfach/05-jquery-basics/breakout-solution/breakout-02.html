@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World with jQuery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- jQuery from a file: -->
+  <script src="../jquery.min.js"></script>
+</head>
+<body>
+
+<div class="content">This is the content.</div>
+<div id="container"></div>
+<ul class="bullets"></ul>
+<h2>This is the heading</h2>
+<div class="article"></div>
+
+
+<script>
+  // TODO use jQuery to create a hierarchy.
+  // it should be
+  //  #container
+  //    .article
+  //      h2
+  //      .content
+  //      .bullets
+  //        li
+  //        li
+  var container = $('#container');
+  var article = $('.article');
+  var content = $('.content');
+  var heading = $('h2');
+  var bullets = $('.bullets');
+
+  container.append(article);
+  article.append(heading);
+  article.append(content);
+  article.append(bullets);
+
+  bullets.append($('<li>jQuery is nice</li>'));
+  bullets.append($('<li>but also  mean</li>'));
+</script>
+</body>
+</html>

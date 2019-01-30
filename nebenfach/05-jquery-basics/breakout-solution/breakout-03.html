@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Breakout 04: Remove</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- jQuery from a file: -->
+  <script src="../jquery.min.js"></script>
+  <style>
+    li {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<!-- Fruit List: -->
+<ul class="fruits"></ul>
+
+<label>Fruit: <input type="text" id="fruitInput"></label>
+<button>Add</button>
+
+<script>
+  var fruitList = $('ul.fruits');
+  var fruitInput = $('#fruitInput');
+  var button = $('button');
+
+  /**
+   * this function takes care to insert everything
+   * that's currently in the <input> to the list.
+   * Afterwards, the content is cleared and the cursor
+   * is moved into the <input> so that the user
+   * can continue typing right away.
+   */
+  function handleFruit() {
+
+    var userFruit = fruitInput.val();
+    var fruitItem = $('<li>' + userFruit + '</li>');
+
+    fruitList.append(fruitItem);
+    fruitInput.val(''); // reset.
+    fruitInput.focus(); // put the cursor in the field.
+
+    // TODO add an event listener to the fruit Item.
+    //      if the user clicks the fruitItem, it should be removed.
+    fruitItem.click(function() {
+      $(this).remove();
+    });
+
+  }
+
+  // the user can click the button and then the fruit is added.
+  button.on('click', handleFruit);
+
+  /**
+   * this event handler allows the user to hit "enter" to add the fruit.
+   */
+  fruitInput.keyup(function(e) {
+    const codeEnter = 13; // enter has ASCII code 13.
+    var keyCode;
+    if (e) {
+      // firefox and chrome / safari do not use the same property.
+      keyCode = e.keyCode ? e.keyCode : e.which;
+      // if the key is "enter", add the fruit.
+      if (keyCode === codeEnter) {
+        handleFruit();
+      }
+    }
+  });
+
+</script>
+</body>
+</html>
