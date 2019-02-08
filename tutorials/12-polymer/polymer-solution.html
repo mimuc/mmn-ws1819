@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<meta charset="utf8">
+<title>Polymer Test</title>
+<script type="module">
+  import { PolymerElement, html } from '@polymer/polymer';
+  import '@polymer/paper-input/paper-input.js';
+
+  class CounterElement extends PolymerElement {
+    static get properties () { return { counterValue: Number }; };
+    static get template () {
+      return html`
+        <style>
+          :host { width: 100%; display: flex; flex-direction: column; align-items: center; }
+          .card { padding: 1rem; display: flex; min-width: 8rem; align-items: center; justify-content: center; border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, .2); margin: 1rem; }
+          button { background-color: #0078D7; padding: .5rem 2rem; border: none; border-radius: 4px; box-shadow: 0 1px 4px rgba(0, 0, 0, .2); color: #ffffff; }
+        </style>
+        <div class="card">[[ counterValue ]]</div>
+        <div>
+          <button on-click="down">-1</button>
+          <button on-click="up">+1</button>
+        </div>
+        <paper-input value="{{ counterValue }}"></paper-input>
+      `;
+    }
+    constructor () { super(); this.counterValue = 0; }
+    up () { this.counterValue++; }
+    down () { this.counterValue--; }
+  }
+  customElements.define('mmn-counter', CounterElement);
+</script>
+<mmn-counter counter-value="10"></mmn-counter>
